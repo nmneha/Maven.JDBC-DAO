@@ -2,16 +2,15 @@ package daos;
 
 import models.Cake;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 import static daos.ConnectionFactory.getConnection;
 
 public class DAO implements cakeDAO {
+
+
 
     public Cake findCakeById(int id) throws SQLException {
         Connection connection = getConnection();
@@ -34,7 +33,6 @@ public class DAO implements cakeDAO {
 
     private Cake extractCakeFromResultSet(ResultSet rs) throws SQLException {
         Cake cake = new Cake();
-
         cake.setId( rs.getInt("id") );
         cake.setSponge( rs.getString("sponge") );
         cake.setCream( rs.getString("cream") );
@@ -55,14 +53,13 @@ public class DAO implements cakeDAO {
     }
 
     public List<Cake> findAll() {
+        Cake cake = new Cake();
         Connection connection = getConnection();
         try {
             Statement stmt = connection.createStatement();
             ResultSet rs = stmt.executeQuery("SELECT * FROM cake");
 
             List<Cake> cakery = new ArrayList<>();
-
-            Cake cake = null;
             while (rs.next()) {
                 cake = extractCakeFromResultSet(rs);
                 cakery.add(cake);
@@ -80,12 +77,50 @@ public class DAO implements cakeDAO {
         return null;
     }
 
-    public Cake update(cakeDTO dto) {
-        return null;
+    public boolean update(Cake cake) {
+        Connection connection = getConnection();
+        try {
+            PreparedStatement ps = connection.prepareStatement("UPDATE cake SET sponge=?, cream=?, filling=?, shape=?, tier=? WHERE id=?");
+            ps.setString(1, cake.getSponge());
+            ps.setString(2, cake.getCream());
+            ps.setString(3, cake.getFilling());
+            ps.setString(4, cake.getShape());
+            ps.setInt(5, cake.getTier());
+            ps.setInt(6, cake.getId());
+
+            int i = ps.executeUpdate();
+
+            if(i == 1) {
+                return true;
+            }
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+
+        return false;
     }
 
-    public Cake create(cakeDTO dto) {
-        return null;
+    public boolean create(Cake cake) {
+        Connection connection = getConnection();
+        try {
+            PreparedStatement ps = connection.prepareStatement("INSERT INTO cake VALUES (NULL, ?, ?, ?, ?, ?)");
+            ps.setString(1, cake.getSponge());
+            ps.setString(2, cake.getCream());
+            ps.setString(3, cake.getShape());
+            ps.setInt(4, cake.getTier());
+            ps.setString(5, cake.getFilling());
+            int i = ps.executeUpdate();
+
+            if(i == 1) {
+                return true;
+            }
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+
+        return false;
     }
 
     public void delete(int id) {

@@ -10,8 +10,8 @@ import java.util.List;
 public interface cakeDAO {
     public Cake findCakeById(int id) throws SQLException;
     public List findAll();
-    public Cake update(cakeDTO dto);
-    public Cake create(cakeDTO dto);
+    public boolean update(Cake cake);
+    public boolean create(Cake cake);
     public void delete(int id);
 
 

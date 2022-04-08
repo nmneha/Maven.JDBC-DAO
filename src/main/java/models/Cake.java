@@ -20,10 +20,12 @@ public class Cake {
 
     public Cake() {}
 
-    public Cake(String sponge, String cream, String filling) {
+    public Cake(String sponge, String cream, String filling, String shape, Integer tier) {
         this.sponge = sponge;
         this.cream = cream;
         this.filling = filling;
+        this.shape = shape;
+        this.tier = tier;
     }
 
     public Cake(Integer id, String sponge, String cream, String filling, String shape, Integer tier) {
