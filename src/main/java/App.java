@@ -22,6 +22,6 @@ public class App {
         Cake cake2 = dao.findCakeById(1);
         dao.printCake(cake2);
         Cake cake3 = new Cake("funfetti", "bubblegum", "m&ms", "round", 3);
-        dao.create(cake3);
+        dao.delete(7);
     }
 }

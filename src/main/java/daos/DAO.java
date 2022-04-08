@@ -123,8 +123,21 @@ public class DAO implements cakeDAO {
         return false;
     }
 
-    public void delete(int id) {
+    public boolean delete(int id) {
+        Connection connection = getConnection();
+        try {
+            Statement stmt = connection.createStatement();
+            int i = stmt.executeUpdate("DELETE FROM cake WHERE id=" + id);
 
+            if(i == 1) {
+                return true;
+            }
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+
+        return false;
     }
 
 

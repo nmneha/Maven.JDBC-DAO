@@ -12,7 +12,7 @@ public interface cakeDAO {
     public List findAll();
     public boolean update(Cake cake);
     public boolean create(Cake cake);
-    public void delete(int id);
+    public boolean delete(int id);
 
 
 
