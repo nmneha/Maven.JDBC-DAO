@@ -9,7 +9,7 @@ import java.sql.SQLException;
 public class ConnectionFactory {
     public static final String URL = "jdbc:mysql://localhost:3306/bakery";
     public static final String USER = "nsuera";
-    public static final String PASS = "atl4ever";
+    public static final String PASS = "pass"; //password removed
 
     /**
      * Get a connection to database
